@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script type="text/javascript" th:inline="javascript">
+        function test() {
+            var va = document.getElementsByName("role");
+            for (var i=0;i<va.length;i++){
+                if(va[i].checked == true){
+                    alert(va[i].value);
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+<form th:action="@{/saveuser}" th:method="post">
+    <input type="text" name="username" id="username"/>
+    <input type="password" name="password" id="password"/>
+    <input type="email" name="email" id="email" />
+    <!--/*@thymesVar id="name" type="templates"*/-->
+    <input type="radio" id="role" name="role" th:each="role:${roles}" th:value="${role.id}" th:text="${role.name}"/>
+    <input type="submit" name="register" id="register" value="注册"/>
+</form>
+<button id="test" onclick="test();">test</button>
+</body>
+</html>
