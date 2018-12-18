@@ -24,16 +24,16 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String)authentication.getCredentials();
-        MyUserDetails userDetails = (MyUserDetails) userService.loadUserByUsername(username);
-        if(userDetails == null){
+        User user =  userService.loadUserByUsername(username);
+        if(user == null){
             throw new BadCredentialsException("用户名未找到");
         }
 
-        if(!password.equals(userDetails.getPassword())){
+        if(!password.equals(user.getPassword())){
             throw new BadCredentialsException("密码错误");
         }
-        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-        return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), authorities);
+        Collection<? extends GrantedAuthority> authorities = user.getAuthorities();
+        return new UsernamePasswordAuthenticationToken(user, user.getPassword(), authorities);
     }
 
     @Override

@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity(name = "sys_article")
@@ -25,13 +27,13 @@ public class Article {
     private String context;
 
     @Column(name = "createDate")
-    @NotEmpty
-    private Date createDate;
+    @NotNull
+    private Timestamp createDate;
 
     @Column(name = "author",insertable = false,updatable = false)
     private String author;
 
-    @ManyToOne(fetch = FetchType.EAGER )
+    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
     @JoinColumn(name = "author")
     private User user;
 
@@ -59,11 +61,11 @@ public class Article {
         this.context = context;
     }
 
-    public Date getCreateDate() {
+    public Timestamp getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
     }
 

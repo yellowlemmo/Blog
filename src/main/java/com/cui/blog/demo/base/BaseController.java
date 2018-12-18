@@ -1,6 +1,6 @@
 package com.cui.blog.demo.base;
 
-import com.cui.blog.demo.config.MyUserDetails;
+import com.cui.blog.demo.pojo.User;
 import com.cui.blog.demo.utils.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ public class BaseController {
     @Autowired
     protected HttpSession session;
 
-    protected MyUserDetails getCurrrentUser(){
+    protected User getCurrrentUser(){
         return  SpringSecurityUtil.currentUser(session);
     }
 

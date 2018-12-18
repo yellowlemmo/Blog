@@ -2,7 +2,6 @@ package com.cui.blog.demo.Service;
 
 
 import com.cui.blog.demo.Repository.UserRepository;
-import com.cui.blog.demo.config.MyUserDetails;
 import com.cui.blog.demo.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,12 +32,12 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByusername(username);
         if(user == null) {
             throw new UsernameNotFoundException("找不到用户信息");
         }else{
-            return new MyUserDetails(user);
+            return user;
         }
     }
 

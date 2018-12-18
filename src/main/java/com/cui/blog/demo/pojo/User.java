@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity(name = "sys_user")
-public class User {
+public class User implements UserDetails{
 
     @Id
     @Column(name = "id")
@@ -37,7 +37,7 @@ public class User {
     @NotNull(message = "角色不能为空！")
     private Role role;
 
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
     private Set<Article> articles = new HashSet<>();
 
     public String getId() {
@@ -89,6 +89,33 @@ public class User {
     }
 
     public User() {
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> list = new ArrayList<>();
+        list.add(new SimpleGrantedAuthority(role.getName()));
+        return list ;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     @Override

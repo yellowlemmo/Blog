@@ -31,34 +31,52 @@
             border: solid 1px darkgrey;
             border-radius: 5px;
         }
+        #addbutton{
+            position: absolute;
+            top: 536px;
+            left: 528px;
+        }
     </style>
 </head>
 <body>
-<div id="header" class="text-center">MarkDown解析器</div>
+<div id="header" class="text-center">博客内容</div>
 <div class="container">
     <div class="row">
         <div class="col-sm-6 col-lg-6 col-md-6">
             <textarea id="md" class="form-control"  placeholder="请输入Markdown代码"></textarea>
         </div>
-        <div id="html" class="col-lg-6 col-sm-6 col-md-6"></div>
+        <div id="html" style="overflow:auto;" class="col-lg-6 col-sm-6 col-md-6"></div>
     </div>
+    <button type="button" id="addbutton" class="btn btn-primary btn-lg" data-toggle="modal" data-target=".titleAndSoOn" onclick="addBlog()">确定</button>
 </div>
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".titleAndSoOn" onclick="addBlog()">确定</button>
-
-<div class="modal fade titleAndSoOn" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+<!--模态框-->
+<div class="modal fade titleAndSoOn" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <form th:action="@{/blog/save}" th:method="post">
+                <h2>文章信息</h2>
+                <br>
                 <div class="form-group">
-                    <label for="title" class="control-label">Recipient:</label>
                     <input type="text" class="form-control" name="title" id="title" placeholder="文章标题">
+                </div>
+                <div>
+                    <p>文章分类</p>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="option2"> 2
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="option3"> 3
+                    </label>
                 </div>
                 <div class="form-group" style="display: none">
                     <label for="context" class="control-label">Message:</label>
                     <textarea class="form-control" name="context" id="context"></textarea>
                 </div>
                 <div>
-                    <input type="submit" name="saveBlog" id="saveBlog" value="保存"/>
+                    <input type="submit" class="btn btn-primary" name="saveBlog" id="saveBlog" value="保存"/>
                 </div>
             </form>
         </div>
