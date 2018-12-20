@@ -26,14 +26,19 @@ public class UserService implements UserDetailsService {
     }
 
     //根据用户名查找用户
-    public User findUserByUserName(String userName){
+    public User findUserByUserName(String userName) throws Exception {
         User user = userRepository.findByusername(userName);
         return user;
     }
 
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByusername(username);
+        User user = null;
+        try {
+            user = userRepository.findByusername(username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if(user == null) {
             throw new UsernameNotFoundException("找不到用户信息");
         }else{

@@ -4,5 +4,5 @@ import com.cui.blog.demo.base.BaseRepository;
 import com.cui.blog.demo.pojo.User;
 
 public interface UserRepository extends BaseRepository<User, String> {
-    User findByusername(String userName);
+    User findByusername(String userName) throws Exception;
 }

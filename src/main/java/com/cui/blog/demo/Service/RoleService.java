@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class RoleService {
@@ -17,4 +18,26 @@ public class RoleService {
        List<Role> roles = roleRepository.findAll();
         return roles;
     }
+
+    /**
+     * 根据角色id查找角色对象
+     * @param id
+     * @return
+     */
+    public Role findRoleById(String id){
+        Role role =roleRepository.findById(id).get();
+        return role;
+    }
+
+    /**
+     * 根据角色名称查找角色对象
+     * @param name
+     * @return
+     * @throws Exception
+     */
+    public Role findRoleByName(String name) throws Exception{
+        Role role = roleRepository.findByName(name);
+        return role;
+    }
+
 }

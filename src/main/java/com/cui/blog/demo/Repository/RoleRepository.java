@@ -4,5 +4,5 @@ import com.cui.blog.demo.base.BaseRepository;
 import com.cui.blog.demo.pojo.Role;
 
 public interface RoleRepository extends BaseRepository<Role,String> {
-
+    Role findByName(String name) throws Exception;
 }

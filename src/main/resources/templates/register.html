@@ -4,27 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <title>注册</title>
-    <script type="text/javascript" th:inline="javascript">
-        function test() {
-            var va = document.getElementsByName("role");
-            for (var i=0;i<va.length;i++){
-                if(va[i].checked == true){
-                    alert(va[i].value);
-                }
-            }
-
+    <link type="text/css" th:href="@{/css/bootstrap.css}" href="../css/bootstrap.css"  rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.bootcss.com/marked/0.5.2/marked.js"></script>
+    <script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}" src="../js/jquery-3.1.1.min.js"></script>
+    <script type="application/javascript" src="../../js/tether.min.js" th:src="@{/js/tether.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.js}" src="../js/bootstrap.js"></script>
+    <style type="text/css">
+        .form-group{
+            overflow: auto;
+            width: 100%;
+            margin: 25px 0;
         }
-    </script>
+        label{
+            min-width: 96px;
+            float: left;
+            display: block;
+            margin-right: 5px;
+            text-transform: capitalize;
+            font-size: 20px;
+        }
+
+        .form-text{
+            display: block;
+            float: left;
+            font-size: 20px;
+        }
+        .form-button{
+            overflow: auto;
+            margin-top: 32px;
+            margin-left: 125px;
+        }
+        #form{
+            position: absolute;
+            top: 28%;
+            left: 38%;
+            border:3px solid #eceeef;
+            height:323px;
+            width: 456px;
+        }
+        #reg{
+            margin-left:41px;
+            margin-top:53px;
+        }
+
+    </style>
 </head>
 <body>
-<form th:action="@{/saveuser}" th:method="post">
-    <input type="text" name="username" id="username"/>
-    <input type="password" name="password" id="password"/>
-    <input type="email" name="email" id="email" />
-    <!--/*@thymesVar id="name" type="templates"*/-->
-    <input type="radio" id="role" name="role" th:each="role:${roles}" th:value="${role.id}" th:text="${role.name}"/>
-    <input type="submit" name="register" id="register" value="注册"/>
+<div id="form">
+<form id="reg" th:action="@{/saveuser}" th:method="post">
+    <div class="form-group">
+        <label for="username">用户名</label>
+    <input type="text" name="username" class="form-text" id="username"/>
+    </div>
+    <div class="form-group">
+        <label for="password">密码</label>
+    <input type="password" name="password" class="form-text" id="password"/>
+    </div>
+    <div class="form-group">
+        <label for="email">邮箱</label>
+    <input type="email" name="email" class="form-text" id="email" />
+    </div>
+    <div class="form-button">
+    <input type="submit" name="register" id="register" class="btn btn-success btn-lg" value="注册"/>
+    </div>
 </form>
-<button id="test" onclick="test();">test</button>
+</div>
 </body>
 </html>
