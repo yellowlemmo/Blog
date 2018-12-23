@@ -20,10 +20,19 @@ public class BaseController {
     @Autowired
     protected HttpSession session;
 
+    /**
+     * 获取当前用户
+     * @return
+     */
     protected User getCurrrentUser(){
         return  SpringSecurityUtil.currentUser(session);
     }
 
+    /**
+     * 初始化请求和响应
+     * @param request
+     * @param response
+     */
     public void setReqAndRes(HttpServletRequest request,HttpServletResponse response){
         this.request = request;
         this.response = response;

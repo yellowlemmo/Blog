@@ -36,27 +36,7 @@
 
 
             <!-- Pagination -->
-            <nav>
-                <ul class="pagination justify-content-center mb-4">
-                    <li class="page-item">
-                        <a href="#" class="page-link" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">4</a></li>
-                    <li class="page-item"><a href="#" class="page-link">5</a></li>
-                    <li class="page-item"><a href="#" class="page-link">6</a></li>
-                    <li class="page-item"><a href="#" class="page-link">7</a></li>
-                    <li class="page-item">
-                        <a href="#" class="page-link" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div th:replace="~{fragments/page :: page}">...</div>
         </div>
 
         <!-- 右侧栏目 -->
@@ -169,6 +149,9 @@
 
 
 <div th:replace="~{fragments/footer :: footer}">...</div>
+<!--ajax分页-->
+
+
 <!--<script type="text/javascript" th:inline="javascript">-->
     <!--$(function () {-->
         <!--var contextValue = $("#context").val();-->

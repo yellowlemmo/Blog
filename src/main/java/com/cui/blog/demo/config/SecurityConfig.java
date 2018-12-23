@@ -4,7 +4,9 @@ import com.cui.blog.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)//开启
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -34,8 +37,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/index","/register",
                 "/saveuser","/css/**","/js/**","/data/**","/fonts/**","/images/**")
                 .permitAll().anyRequest().authenticated()
-                .antMatchers("/user/userspace").hasRole("")
-                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -52,6 +53,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
     }
+
+    @Bean
+    @Override
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
+    }
+
+    @Autowired//注意这个方法是注入的
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService);
+    }
+
 
     @Override
     public void configure(WebSecurity web) throws Exception {

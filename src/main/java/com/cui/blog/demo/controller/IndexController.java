@@ -44,7 +44,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping("/index")
     public String index(Model model){
-        PageRequest pageable = PageRequest.of(0,5);
+        PageRequest pageable = PageRequest.of(0,1);
         Page page = articleService.findAllBlog(pageable);
         model.addAttribute("page",page);
         return "index";
