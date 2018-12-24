@@ -9,6 +9,7 @@ import com.cui.blog.demo.pojo.Article;
 import com.cui.blog.demo.pojo.User;
 import com.cui.blog.demo.utils.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,6 @@ public class BolgController extends BaseController {
         Timestamp createTime = new Timestamp(System.currentTimeMillis());
         article.setCreateDate(createTime);
         articleService.saveBlog(article);
-        return "index";
+        return "redirect:/index";
     }
 }
