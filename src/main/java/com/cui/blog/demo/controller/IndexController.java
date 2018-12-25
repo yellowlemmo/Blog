@@ -4,6 +4,7 @@ import com.cui.blog.demo.Service.ArticleService;
 import com.cui.blog.demo.base.BaseController;
 import com.cui.blog.demo.Service.RoleService;
 import com.cui.blog.demo.Service.UserService;
+import com.cui.blog.demo.base.PageableFactory;
 import com.cui.blog.demo.pojo.Article;
 import com.cui.blog.demo.pojo.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -44,9 +46,11 @@ public class IndexController extends BaseController {
 
 
     @RequestMapping("/index")
-    public String index(Model model){
-        PageRequest pageable = PageRequest.of(0,10);
-        Page<Article> page = articleService.findAllBlog(pageable);
+    public String index(Model model,
+                        @RequestParam(value = "pageIndex",defaultValue = "0") int pageIndex,
+                        @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
+        PageableFactory pageableFactory = new PageableFactory(pageIndex,pageSize);
+        Page<Article> page = articleService.findAllBlog(pageableFactory.getPageable());
         model.addAttribute("page",page);
         return "index";
     }

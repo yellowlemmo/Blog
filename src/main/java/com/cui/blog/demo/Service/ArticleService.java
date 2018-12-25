@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class ArticleService {
 
     @Autowired
@@ -25,11 +27,15 @@ public class ArticleService {
         return page;
     }
 
+    public Article findById(String blogId) throws Exception{
+        return articleRepository.findById(blogId).get();
+    }
+
     /**
      * 保存博客
      * @param article
      */
-    public void saveBlog(Article article){
+    public void saveBlog(Article article) throws Exception{
         articleRepository.saveAndFlush(article);
     }
 

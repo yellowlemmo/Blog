@@ -12,7 +12,14 @@
     <script type="text/javascript" th:src="@{/js/page.js}"></script>
 </head>
 <body>
-<form th:action="@{/admin/users}" id="form1" name="form1" th:method="get">
+<form th:action="@{/admin/users}" id="form1" name="form1" th:method="post">
+    <div class="form-group">
+        <label for="username">用户名</label>
+        <input type="text" name="username" id="username" class="form-text"/>
+    </div>
+    <div class="form-button">
+        <input class="btn btn-success" type="submit" name="userlist" id="userlist" value="搜素"/>
+    </div>
 </form>
 <table class="table table-hover">
     <tr class="info">

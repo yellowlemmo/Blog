@@ -2,6 +2,7 @@ package com.cui.blog.demo.controller;
 
 
 import com.cui.blog.demo.Repository.UserRepository;
+import com.cui.blog.demo.Service.UserService;
 import com.cui.blog.demo.base.BaseController;
 import com.cui.blog.demo.base.PageableFactory;
 import com.cui.blog.demo.pojo.User;
@@ -11,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,16 +20,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AdminController extends BaseController {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PreAuthorize("hasAuthority('Role_admin')")
-    @GetMapping(value = "/users")
+    @RequestMapping(value = "/users")
     public String findUser(Model model,
+                           String username,
                            @RequestParam(value = "pageIndex",defaultValue = "0") int pageIndex,
-                           @RequestParam(value = "pageSize",defaultValue = "1") int pageSize){
-        System.out.println(SpringSecurityUtil.currentUser(session).getRole().getName());
+                           @RequestParam(value = "pageSize",defaultValue = "5") int pageSize) throws Exception{
         PageableFactory pageableFactory = new PageableFactory(pageIndex,pageSize);
-        Page<User> page = userRepository.findAll(pageableFactory.getPageable());
+        Page<User> page = userService.findUserByUsername(username,pageableFactory.getPageable());
         model.addAttribute("page",page);
         return "/admin/userlist";
     }

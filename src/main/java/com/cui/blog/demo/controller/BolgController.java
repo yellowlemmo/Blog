@@ -1,16 +1,14 @@
 package com.cui.blog.demo.controller;
 
-import com.cui.blog.demo.Repository.ArticleRepository;
 import com.cui.blog.demo.Repository.UserRepository;
 import com.cui.blog.demo.Service.ArticleService;
-import com.cui.blog.demo.Service.UserService;
 import com.cui.blog.demo.base.BaseController;
 import com.cui.blog.demo.pojo.Article;
 import com.cui.blog.demo.pojo.User;
 import com.cui.blog.demo.utils.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -35,8 +33,13 @@ public class BolgController extends BaseController {
         return "addBlog";
     }
 
+    /**
+     * 保存博客
+     * @param article
+     * @return
+     */
     @PostMapping(value = "/save")
-    public String saveBlog(Article article){
+    public String saveBlog(Article article) throws Exception{
         if (article == null){
             return "error";
         }
@@ -46,4 +49,13 @@ public class BolgController extends BaseController {
         articleService.saveBlog(article);
         return "redirect:/index";
     }
+
+    @RequestMapping(value = "/blogContext")
+    public String blogContextView(Model model,String blogId) throws Exception{
+        Article blog = articleService.findById(blogId);
+        model.addAttribute("blog",blog);
+        return "/blog/blogView";
+    }
+
+
 }

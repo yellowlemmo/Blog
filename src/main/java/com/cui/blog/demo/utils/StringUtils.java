@@ -2,8 +2,8 @@ package com.cui.blog.demo.utils;
 
 public class StringUtils {
 
-    public boolean isNotEmpty(String str){
-        if(str.equals("") || str == null){
+    public static boolean isNotEmpty(String str){
+        if(str == null || "".equals(str.trim())){
             return false;
         }
         return true;

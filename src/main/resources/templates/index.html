@@ -12,6 +12,7 @@
         <div class="col-md-8">
 
             <!-- Blog Post -->
+            <form th:action="@{/index}" id="form1" name="form1" th:method="post">
             <div class="card mb-4" th:each="blog : ${page.content}">
                 <div class="card-block">
                     <h2 class="card-title">
@@ -21,19 +22,19 @@
                                      alt="waylau">
 			                  </a>
 					        </span>-->
-                        <a href="/u/waylau/blogs/1" class="card-link" th:text="${blog.title}" title="waylau">
+                        <a href="/u/waylau/blogs/1" th:href="@{/blog/blogContext(blogId=${blog.article_id})}" class="card-link" th:text="${blog.title}" title="waylau">
                             OAuth 2.0 认证的原理与实践
                         </a></h2>
                     <!--<input type="hidden" id="context" name="context" th:value="${blog.context}"/>-->
                     <p class="card-text" th:value="${blog.context}" id="BlogContext"></p>
                     <div class="card-text">
-                        <a href="/u/waylau" class="card-link" th:text="${blog.user.username}">waylau</a> 发表于 2017-03-17 <i class="fa fa-eye" aria-hidden="true">210</i>
+                        <a href="/u/waylau" class="card-link" th:text="${blog.user.username}">waylau</a>发表于：<span th:text="${blog.createDate}"></span><i class="fa fa-eye" aria-hidden="true">210</i>
                         <i class="fa fa-heart-o" aria-hidden="true">10</i> <i class="fa fa-comment-o"
                                                                               aria-hidden="true">110</i>
                     </div>
                 </div>
             </div>
-
+            </form>
 
             <!-- Pagination -->
             <div th:replace="~{fragments/page :: page}">...</div>
@@ -149,14 +150,6 @@
 
 
 <div th:replace="~{fragments/footer :: footer}">...</div>
-<!--ajax分页-->
-
-
-<!--<script type="text/javascript" th:inline="javascript">-->
-    <!--$(function () {-->
-        <!--var contextValue = $("#context").val();-->
-        <!--$('#BlogContext').html(contextValue);-->
-    <!--});-->
-<!--</script>-->
+<script type="text/javascript" th:src="@{/js/page.js}"></script>
 </body>
 </html>
