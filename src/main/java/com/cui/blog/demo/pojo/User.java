@@ -10,6 +10,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.*;
 
+
+/**
+ * 用户实体类
+ */
 @Entity(name = "sys_user")
 public class User implements UserDetails{
 
@@ -37,6 +41,9 @@ public class User implements UserDetails{
     @NotNull(message = "角色不能为空！")
     private Role role;
 
+    /**
+     * 用户的文章
+     */
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
     private Set<Article> articles = new HashSet<>();
 

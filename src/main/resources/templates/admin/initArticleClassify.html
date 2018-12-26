@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>博客分类新增</title>
+</head>
+<body>
+<div>
+    <form th:action="@{/admin/saveArticleClassify}">
+        分类名称：<input type="text" name="classifyName" id="classifyName"/>
+        <input type="submit" name="classify" value="保存"/>
+    </form>
+</div>
+</body>
+</html>

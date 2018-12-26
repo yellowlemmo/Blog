@@ -61,15 +61,10 @@
                 </div>
                 <div>
                     <p>文章分类</p>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox2" value="option2"> 2
-                    </label>
-                    <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox3" value="option3"> 3
-                    </label>
+                    <input type="hidden" name="classifyId" id="classifyId"/>
+                    <select id="classify">
+                        <option th:each="classify:${articleClassifyList}" th:value="${classify.classifyId}" th:text="${classify.classifyName}"></option>
+                    </select>
                 </div>
                 <div class="form-group" style="display: none">
                     <label for="context" class="control-label">Message:</label>
@@ -87,5 +82,7 @@
     $("#md").on("keyup blur",function () {
         $('#html').html(marked($("#md").val()))
     })
+
+    $('#classifyId').val($("#classify, option:selected").val());
 </script>
 </html>

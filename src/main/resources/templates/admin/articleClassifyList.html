@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>分类列表</title>
+</head>
+<body>
+<form th:action="@{/admin/articleClassifyList}" th:method="post">
+    分类名称：<input type="text" name="classifyName" id="classifyName"/>
+    <input type="submit" name="classify" value="保存"/>
+</form>
+<table class="table table-hover">
+    <tr class="info">
+        <td>名称</td>
+    </tr>
+    <tr class="success" th:each="articleClassify : ${page.content}">
+        <td th:text="${articleClassify.classifyName}">---</td>
+    </tr>
+</table>
+</body>
+</html>
