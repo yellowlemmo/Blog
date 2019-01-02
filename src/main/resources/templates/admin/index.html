@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员管理页面</title>
+    <style>
+        body{
+            margin: 0 auto;
+        }
+        .pg_header{
+            height: 48px;
+            background-color: #2459a2;
+            color: white;
+        }
+        .pg_content .menu{
+            position: fixed;
+            top: 50px;
+            left: 0;
+            bottom: 0;
+            width: 200px;
+            background-color: #15ddc124;
+        }
+        .pg_content .content{
+            position: fixed;
+            top: 50px;
+            right: 0;
+            bottom: 0;
+            left: 202px;
+            background-color: #ffffff;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="pg_header"></div>
+<div class="pg_content">
+    <div class="menu">
+        <ul>
+            <li th:each="permission : ${permissions}"><a th:target="iFrame1" th:text="${permission.name}" th:href="@{${permission.url}}"></a></li>
+        </ul>
+    </div>
+    <div class="content">
+    </div>
+</div>
+<div class="pg_footer"></div>
+</body>
+</html>

@@ -2,12 +2,13 @@ package com.cui.blog.demo.controller;
 
 
 import com.cui.blog.demo.Service.ArticleClassifyService;
+import com.cui.blog.demo.Service.PermissionService;
 import com.cui.blog.demo.Service.UserService;
 import com.cui.blog.demo.base.BaseController;
 import com.cui.blog.demo.base.PageableFactory;
 import com.cui.blog.demo.pojo.ArticleClassify;
+import com.cui.blog.demo.pojo.Permission;
 import com.cui.blog.demo.pojo.User;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @PreAuthorize("hasAnyAuthority('Role_admin')")
@@ -32,6 +35,24 @@ public class AdminController extends BaseController {
      */
     @Autowired
     private ArticleClassifyService articleClassifyService;
+
+    /**
+     * 管理员权限管理service
+     */
+    @Autowired
+    private PermissionService permissionService;
+
+    /**
+     * 管理员主页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/index")
+    public String adminIndex(Model model){
+        List<Permission> permissions = permissionService.findAll();
+        model.addAttribute("permissions",permissions);
+        return "/admin/index";
+    }
 
     /**
      * 用户列表
