@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{admin/menu :: menu}">
     <meta charset="UTF-8">
     <title>分类列表</title>
 </head>
 <body>
+<section class="Hui-article-box">
 <form th:action="@{/admin/articleClassifyList}" th:method="post">
     分类名称：<input type="text" name="classifyName" id="classifyName"/>
     <input type="submit" name="classify" value="保存"/>
@@ -18,5 +19,6 @@
         <td th:text="${articleClassify.classifyName}">---</td>
     </tr>
 </table>
+</section>
 </body>
 </html>

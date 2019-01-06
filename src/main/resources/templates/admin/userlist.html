@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:include="~{admin/menu :: menu}">
     <meta charset="UTF-8">
     <title>管理员控制台</title>
     <link type="text/css" th:href="@{/css/bootstrap.css}" href="../css/bootstrap.css"  rel="stylesheet">
-    <script type="text/javascript" src="https://cdn.bootcss.com/marked/0.5.2/marked.js"></script>
-    <script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}" src="../js/jquery-3.1.1.min.js"></script>
     <script type="application/javascript" src="../../js/tether.min.js" th:src="@{/js/tether.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/bootstrap.js}" src="../js/bootstrap.js"></script>
     <script type="text/javascript" th:src="@{/js/page.js}"></script>
 </head>
 <body>
+<div ></div>
+<section class="Hui-article-box">
+    <div class="Hui-article">
 <form th:action="@{/admin/users}" id="form1" name="form1" th:method="post">
     <div class="form-group">
         <label for="username">用户名</label>
@@ -36,5 +37,7 @@
 </table>
 <!-- Pagination -->
 <div th:replace="~{fragments/page :: page}">...</div>
+    </div>
+</section>
 </body>
 </html>
