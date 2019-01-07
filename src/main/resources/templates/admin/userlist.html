@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-<head th:include="~{admin/menu :: menu}">
+<head>
     <meta charset="UTF-8">
     <title>管理员控制台</title>
-    <link type="text/css" th:href="@{/css/bootstrap.css}" href="../css/bootstrap.css"  rel="stylesheet">
+    <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js" th:src="@{/js/jquery-3.1.1.min.js}"></script>
     <script type="application/javascript" src="../../js/tether.min.js" th:src="@{/js/tether.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/bootstrap.js}" src="../js/bootstrap.js"></script>
     <script type="text/javascript" th:src="@{/js/page.js}"></script>
+    <style>
+        #page ul{
+            list-style: none;
+            font-size: 30px;
+        }
+        #page li{
+            float: left;
+        }
+        #page{
+            float: right;
+            margin-top: 5px;
+        }
+    </style>
 </head>
 <body>
-<div ></div>
+<div th:include="~{admin/menu :: menu}"></div>
 <section class="Hui-article-box">
     <div class="Hui-article">
 <form th:action="@{/admin/users}" id="form1" name="form1" th:method="post">
@@ -23,12 +36,12 @@
     </div>
 </form>
 <table class="table table-hover">
-    <tr class="info">
+    <tr class="success">
         <td>用户名</td>
         <td>邮箱</td>
         <td>角色</td>
     </tr>
-    <tr class="success" th:each="user : ${page.content}">
+    <tr class="info" th:each="user : ${page.content}">
         <td th:text="${user.username}">---</td>
         <td th:text="${user.email}">---</td>
         <td th:text="${user.role.name}">---</td>
@@ -36,7 +49,7 @@
     </tr>
 </table>
 <!-- Pagination -->
-<div th:replace="~{fragments/page :: page}">...</div>
+<div id="page" th:include="~{fragments/page :: page}">...</div>
     </div>
 </section>
 </body>

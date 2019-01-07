@@ -12,7 +12,6 @@ import java.util.List;
  * 权限service
  */
 @Service
-@Transactional
 public class PermissionService  {
 
     @Autowired
@@ -25,5 +24,14 @@ public class PermissionService  {
     public List<Permission> findAll(){
         List<Permission> list = permissionRepository.findAll();
         return list;
+    }
+
+    /**
+     * 保存权限
+     * @param permission
+     */
+    @Transactional
+    public void savePermission(Permission permission){
+        permissionRepository.saveAndFlush(permission);
     }
 }

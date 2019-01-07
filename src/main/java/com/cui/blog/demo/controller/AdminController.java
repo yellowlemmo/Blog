@@ -3,11 +3,13 @@ package com.cui.blog.demo.controller;
 
 import com.cui.blog.demo.Service.ArticleClassifyService;
 import com.cui.blog.demo.Service.PermissionService;
+import com.cui.blog.demo.Service.RoleService;
 import com.cui.blog.demo.Service.UserService;
 import com.cui.blog.demo.base.BaseController;
 import com.cui.blog.demo.base.PageableFactory;
 import com.cui.blog.demo.pojo.ArticleClassify;
 import com.cui.blog.demo.pojo.Permission;
+import com.cui.blog.demo.pojo.Role;
 import com.cui.blog.demo.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,6 +45,12 @@ public class AdminController extends BaseController {
     private PermissionService permissionService;
 
     /**
+     * 角色service
+     */
+    @Autowired
+    private RoleService roleService;
+
+    /**
      * 管理员主页面
      * @param model
      * @return
@@ -67,7 +75,7 @@ public class AdminController extends BaseController {
     public String userList(Model model,
                            String username,
                            @RequestParam(value = "pageIndex",defaultValue = "0") int pageIndex,
-                           @RequestParam(value = "pageSize",defaultValue = "5") int pageSize) throws Exception{
+                           @RequestParam(value = "pageSize",defaultValue = "10") int pageSize) throws Exception{
         PageableFactory pageableFactory = new PageableFactory(pageIndex,pageSize);
         Page<User> page = userService.findUserByUsername(username,pageableFactory.getPageable());
         model.addAttribute("page",page);
@@ -111,6 +119,28 @@ public class AdminController extends BaseController {
         Page<ArticleClassify> page = articleClassifyService.articleClassifyList(classifyName,pageableFactory.getPageable());
         model.addAttribute("page",page);
         return "/admin/articleClassifyList";
+    }
+
+    /**
+     * 初始化管理员增加新的管理权限
+     * @return
+     */
+    @RequestMapping(value = "/addPermission")
+    public String addPermission(Model model){
+        List<Role> roles = roleService.findAllRole();
+        model.addAttribute("roles",roles);
+        return "/admin/addPermission";
+    }
+
+    /**
+     * 保存管理要管理的权限
+     * @param permission
+     * @return
+     */
+    @RequestMapping(value = "/newPermission")
+    public String newPermission(Permission permission){
+        permissionService.savePermission(permission);
+        return "redirect:/admin/index";
     }
 
 }
