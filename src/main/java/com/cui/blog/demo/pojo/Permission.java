@@ -48,7 +48,7 @@ public class Permission {
     /**
      * 角色权限多对多，权限为维护端
      */
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             //中间表名
             name = "sys_permission_role",

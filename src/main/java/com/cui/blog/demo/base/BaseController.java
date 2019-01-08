@@ -2,6 +2,8 @@ package com.cui.blog.demo.base;
 
 import com.cui.blog.demo.pojo.User;
 import com.cui.blog.demo.utils.SpringSecurityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -19,6 +21,7 @@ public class BaseController {
 
     @Autowired
     protected HttpSession session;
+
 
     /**
      * 获取当前用户

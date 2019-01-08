@@ -7,6 +7,8 @@ import com.cui.blog.demo.Service.UserService;
 import com.cui.blog.demo.base.PageableFactory;
 import com.cui.blog.demo.pojo.Article;
 import com.cui.blog.demo.pojo.Role;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +24,8 @@ import java.util.List;
 
 @Controller
 public class IndexController extends BaseController {
+
+    private static final Logger logger = LoggerFactory.getLogger(IndexController.class);
 
     /**
      * 用户角色service接口
@@ -68,6 +72,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "/register")
     public String register(Model model){
+        logger.info("初始化注册页面");
         List<Role> roles = roleService.findAllRole();
         model.addAttribute("roles",roles);
         return "register";
@@ -75,6 +80,7 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "/login/error")
     public String loginError(Model model){
+        logger.error("登录失败");
         model.addAttribute("errorMessage","用户名密码不正确！");
         return "login";
     }

@@ -9,6 +9,8 @@ import com.cui.blog.demo.pojo.Article;
 import com.cui.blog.demo.pojo.ArticleClassify;
 import com.cui.blog.demo.pojo.User;
 import com.cui.blog.demo.utils.SpringSecurityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,7 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/blog")
 public class BolgController extends BaseController {
-
+    private static final Logger logger = LoggerFactory.getLogger(BolgController.class);
     /**
      * 博客Service接口
      */
@@ -43,6 +45,7 @@ public class BolgController extends BaseController {
 
     @RequestMapping(value = "/add")
     public String addNewBlog(Model model) throws Exception{
+        logger.info("初始化新增博客页面");
         List<ArticleClassify> articleClassifyList = articleClassifyService.articleClassifyList();
         model.addAttribute("articleClassifyList",articleClassifyList);
         return "addBlog";
@@ -55,7 +58,9 @@ public class BolgController extends BaseController {
      */
     @PostMapping(value = "/save")
     public String saveBlog(Article article,String classifyId) throws Exception{
+        logger.info("保存博客");
         if (article == null){
+            logger.error("保存博客失败");
             return "error";
         }
         //文章分类
@@ -65,6 +70,7 @@ public class BolgController extends BaseController {
         article.setCreateDate(createTime);
         article.setArticleClassify(articleClassify);
         articleService.saveBlog(article);
+        logger.info("保存博客成功");
         return "redirect:/index";
     }
 
@@ -77,6 +83,7 @@ public class BolgController extends BaseController {
      */
     @RequestMapping(value = "/blogContext")
     public String blogContextView(Model model,String blogId) throws Exception{
+        logger.info("查看博客内容");
         Article blog = articleService.findById(blogId);
         model.addAttribute("blog",blog);
         return "/blog/blogView";

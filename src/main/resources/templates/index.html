@@ -13,7 +13,7 @@
 
             <!-- Blog Post -->
             <form th:action="@{/index}" id="form1" name="form1" th:method="post">
-            <div class="card mb-4" th:each="blog : ${page.content}">
+            <div th:if="${page.size ne 0}" class="card mb-4" th:each="blog : ${page.content}">
                 <div class="card-block">
                     <h2 class="card-title">
 							<!--<span>
