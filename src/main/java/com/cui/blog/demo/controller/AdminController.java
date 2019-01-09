@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -83,6 +84,8 @@ public class AdminController extends BaseController {
                            @RequestParam(value = "pageSize",defaultValue = "10") int pageSize) throws Exception{
         PageableFactory pageableFactory = new PageableFactory(pageIndex,pageSize);
         logger.info("查看用户列表");
+        List<Permission> permissions = permissionService.findAll();
+        model.addAttribute("permissions",permissions);
         Page<User> page = userService.findUserByUsername(username,pageableFactory.getPageable());
         model.addAttribute("page",page);
         return "/admin/userlist";
@@ -147,8 +150,12 @@ public class AdminController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/newPermission")
-    public String newPermission(Permission permission){
+    public String newPermission(Permission permission,@RequestParam(name = "role") String role){
         logger.info("保存管理权限");
+        Role role1 = roleService.findRoleById(role);
+        List<Role> roles = new ArrayList<>();
+        roles.add(role1);
+        permission.setRoles(roles);
         permissionService.savePermission(permission);
         return "redirect:/admin/index";
     }

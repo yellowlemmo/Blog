@@ -24,7 +24,8 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">所属角色</label>
             <div class="formControls col-xs-8 col-sm-7">
-                   <select class="input-text">
+                <input type="hidden" name="role" id="role"/>
+                   <select id="roles" class="input-text">
                      <option th:each="role : ${roles}" th:value="${role.id}" th:text="${role.chName}"></option>
                    </select>
             </div>
@@ -42,5 +43,8 @@
         </div>
     </form>
 </section>
+<script th:inline="javascript">
+    $('#role').val($('#roles,option:selected').val());
+</script>
 </body>
 </html>

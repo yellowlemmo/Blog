@@ -40,12 +40,13 @@
         <td>用户名</td>
         <td>邮箱</td>
         <td>角色</td>
+        <td>操作</td>
     </tr>
     <tr class="info" th:each="user : ${page.content}">
         <td th:text="${user.username}">---</td>
         <td th:text="${user.email}">---</td>
         <td th:text="${user.role.name}">---</td>
-        <td>操作</td>
+        <td><a href="#">修改</a>&nbsp&nbsp;<a href="#">删除</a></td>
     </tr>
 </table>
 <!-- Pagination -->
