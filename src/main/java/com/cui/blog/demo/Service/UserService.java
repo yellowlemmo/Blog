@@ -56,6 +56,20 @@ public class UserService implements UserDetailsService {
         return page;
     }
 
+    /**
+     * 通过用户名和邮箱查找用户
+     * @param username
+     * @param eamil
+     * @return
+     */
+    public User findUserByUsernameAndEmail(String username,String eamil) throws Exception{
+        return userRepository.findByUsernameAndEmail(username,eamil);
+    }
+
+    public void updatePasswordById(String password,String id) throws Exception{
+        userRepository.updatePasswordById(password,id);
+    }
+
     @Override
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = null;

@@ -11,6 +11,7 @@ import com.cui.blog.demo.pojo.ArticleClassify;
 import com.cui.blog.demo.pojo.Permission;
 import com.cui.blog.demo.pojo.Role;
 import com.cui.blog.demo.pojo.User;
+import com.cui.blog.demo.utils.SpringSecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/index")
     public String adminIndex(Model model){
         logger.info("进入管理员主页");
-        List<Permission> permissions = permissionService.findAll();
+        List<Permission> permissions = SpringSecurityUtil.currentUser(session).getRole().getPermissions();
         model.addAttribute("permissions",permissions);
         return "/admin/index";
     }
@@ -84,8 +85,7 @@ public class AdminController extends BaseController {
                            @RequestParam(value = "pageSize",defaultValue = "10") int pageSize) throws Exception{
         PageableFactory pageableFactory = new PageableFactory(pageIndex,pageSize);
         logger.info("查看用户列表");
-        List<Permission> permissions = permissionService.findAll();
-        model.addAttribute("permissions",permissions);
+        List<Permission> permissions = SpringSecurityUtil.currentUser(session).getRole().getPermissions();
         Page<User> page = userService.findUserByUsername(username,pageableFactory.getPageable());
         model.addAttribute("page",page);
         return "/admin/userlist";

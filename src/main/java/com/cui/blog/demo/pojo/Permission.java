@@ -48,15 +48,7 @@ public class Permission {
     /**
      * 角色权限多对多，权限为维护端
      */
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            //中间表名
-            name = "sys_permission_role",
-            // 指定当前表在中间表的外键名称和外键所指向的当前表主键
-            joinColumns = {@JoinColumn(name = "permission_id", referencedColumnName = "id")},
-            // 指定另一方在中间表的外键名称和外键所指向的主键
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
-    )
+    @ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER,mappedBy = "permissions")
     private List<Role> roles;
 
     public String getId() {

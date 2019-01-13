@@ -5,6 +5,9 @@ import com.cui.blog.demo.base.PageableFactory;
 import com.cui.blog.demo.pojo.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends BaseRepository<User, String> {
     /**
@@ -24,5 +27,18 @@ public interface UserRepository extends BaseRepository<User, String> {
      * @throws Exception
      */
     Page<User> findByUsernameLike(String username, Pageable pageable) throws Exception;
+
+    /**
+     * 通过用户名和邮箱查找用户
+     * @param username
+     * @param email
+     * @return
+     * @throws Exception
+     */
+    User findByUsernameAndEmail(String username,String email) throws Exception;
+
+    @Query(value = "update sys_user set password=:password where id=:id",nativeQuery = true)
+    @Modifying
+    void updatePasswordById(@Param(value = "password") String password, @Param(value = "id") String id) throws Exception;
 
 }
