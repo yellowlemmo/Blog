@@ -66,8 +66,31 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsernameAndEmail(username,eamil);
     }
 
+    public User findUserById(String id) throws Exception{
+        return userRepository.findById(id).get();
+    }
+
+    /**
+     * 更新密码
+     * @param password
+     * @param id
+     * @throws Exception
+     */
+
     public void updatePasswordById(String password,String id) throws Exception{
         userRepository.updatePasswordById(password,id);
+    }
+
+    /**
+     * 更新用户信息
+     * @param username
+     * @param password
+     * @param email
+     * @param id
+     * @throws Exception
+     */
+    public void updateUserById(String username,String password,String email,String id) throws Exception{
+        userRepository.updateUserById(username,password,email,id);
     }
 
     @Override

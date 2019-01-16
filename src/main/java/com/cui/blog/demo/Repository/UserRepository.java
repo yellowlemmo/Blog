@@ -37,8 +37,27 @@ public interface UserRepository extends BaseRepository<User, String> {
      */
     User findByUsernameAndEmail(String username,String email) throws Exception;
 
+    /**
+     * 修改用户密码
+     * @param password
+     * @param id
+     * @throws Exception
+     */
     @Query(value = "update sys_user set password=:password where id=:id",nativeQuery = true)
     @Modifying
     void updatePasswordById(@Param(value = "password") String password, @Param(value = "id") String id) throws Exception;
+
+    /**
+     * 根据id更新用户信息
+     * @param username
+     * @param password
+     * @param email
+     * @param id
+     * @throws Exception
+     */
+    @Query(value = "update sys_user set username=:username,password=:password,email=:email where id=:id",nativeQuery = true)
+    @Modifying
+    void updateUserById(@Param(value = "username") String username,@Param(value = "password") String password,
+                        @Param(value = "email") String email,@Param(value = "id") String id) throws Exception;
 
 }

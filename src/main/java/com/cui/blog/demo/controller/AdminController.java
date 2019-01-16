@@ -86,6 +86,7 @@ public class AdminController extends BaseController {
         PageableFactory pageableFactory = new PageableFactory(pageIndex,pageSize);
         logger.info("查看用户列表");
         List<Permission> permissions = SpringSecurityUtil.currentUser(session).getRole().getPermissions();
+        model.addAttribute("permissions",permissions);
         Page<User> page = userService.findUserByUsername(username,pageableFactory.getPageable());
         model.addAttribute("page",page);
         return "/admin/userlist";
@@ -127,6 +128,8 @@ public class AdminController extends BaseController {
                                       @RequestParam(value = "pageSize",defaultValue = "5") int pageSize) throws Exception{
         PageableFactory pageableFactory = new PageableFactory(pageIndex,pageSize);
         logger.info("查看博客分类列表");
+        List<Permission> permissions = SpringSecurityUtil.currentUser(session).getRole().getPermissions();
+        model.addAttribute("permissions",permissions);
         Page<ArticleClassify> page = articleClassifyService.articleClassifyList(classifyName,pageableFactory.getPageable());
         model.addAttribute("page",page);
         return "/admin/articleClassifyList";

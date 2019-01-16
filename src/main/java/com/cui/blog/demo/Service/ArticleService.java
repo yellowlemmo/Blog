@@ -2,6 +2,7 @@ package com.cui.blog.demo.Service;
 
 import com.cui.blog.demo.Repository.ArticleRepository;
 import com.cui.blog.demo.pojo.Article;
+import com.cui.blog.demo.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,13 +18,13 @@ public class ArticleService {
 
     /**
      * 根据用户id查询博客
-     * @param userId
+     * @param user
      * @param pageable
      * @return
      * @throws Exception
      */
-    public Page findallByuser(String userId, Pageable pageable) throws  Exception{
-        Page page = articleRepository.findallByuser(userId,pageable);
+    public Page findallByuser(User user, Pageable pageable) throws  Exception{
+        Page page = articleRepository.queryArticleByUser(user,pageable);
         return page;
     }
 
