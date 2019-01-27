@@ -16,6 +16,12 @@ public class EsBlogController {
     @Autowired
     private EsBlogService esBlogService;
 
+    /**
+     * 全文检索
+     * @param searchContext
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/blog")
     public String search(String searchContext) throws Exception{
         List<EsBolg> esBolgs = esBlogService.search(searchContext);
