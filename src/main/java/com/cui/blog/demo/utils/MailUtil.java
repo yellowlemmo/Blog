@@ -11,12 +11,19 @@ import javax.mail.internet.MimeMessage;
 
 public class MailUtil {
 
-    public static final String SMTPSERVER = "smtp.163.com";
-    public static final String SMTPPORT = "465";
-    public static final String ACCOUT = "czckyd777@163.com";
-    public static final String PWD = "qwer1314";
-    public static final String SIMPLEACCOUNT = "czckyd777";
-    public static final String AUTHCODE = "czcqwer1314";
+    //邮件配置文件
+    private static final String PROPERTIES_PATH = "classpath:mail.properties";
+
+    /**
+     *读取邮箱配置
+     */
+    public static final String SMTPSERVER = Utils.getProperties(PROPERTIES_PATH,"SMTPSERVER");
+    public static final String SMTPPORT = Utils.getProperties(PROPERTIES_PATH,"SMTPPORT");
+    public static final String SIMPLEACCOUNT = Utils.getProperties(PROPERTIES_PATH,"SIMPLEACCOUNT");
+    public static final String AUTHCODE = Utils.getProperties(PROPERTIES_PATH,"AUTHCODE");
+    public static final String ACCOUT = Utils.getProperties(PROPERTIES_PATH,"ACCOUT");
+    public static final String PWD = Utils.getProperties(PROPERTIES_PATH,"PWD");
+
 
     public static void SendEmail(String subject,String text) throws Exception {
 

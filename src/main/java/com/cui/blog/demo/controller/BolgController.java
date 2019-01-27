@@ -1,5 +1,7 @@
 package com.cui.blog.demo.controller;
 
+import com.cui.blog.demo.ElasticSearch.EsPojo.EsBolg;
+import com.cui.blog.demo.ElasticSearch.EsService.EsBlogService;
 import com.cui.blog.demo.Repository.UserRepository;
 import com.cui.blog.demo.Service.ArticleClassifyService;
 import com.cui.blog.demo.Service.ArticleService;
@@ -36,6 +38,9 @@ public class BolgController extends BaseController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EsBlogService esBlogService;
+
     /**
      * 博客分类service
      * @return
@@ -70,6 +75,9 @@ public class BolgController extends BaseController {
         article.setCreateDate(createTime);
         article.setArticleClassify(articleClassify);
         articleService.saveBlog(article);
+        EsBolg  esBolg = new EsBolg(article.getArticle_id(),article.getTitle(),article.getContext());
+        //索引博客
+        esBlogService.save(esBolg);
         logger.info("保存博客成功");
         return "redirect:/index";
     }
