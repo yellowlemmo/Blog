@@ -113,6 +113,12 @@
             <version>1.5.0-b01</version>
         </dependency>
 
+        <!--读取application配置文件注解类-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
