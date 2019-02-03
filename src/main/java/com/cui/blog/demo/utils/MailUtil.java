@@ -25,7 +25,7 @@ public class MailUtil {
     public static final String PWD = Utils.getProperties(PROPERTIES_PATH,"PWD");
 
 
-    public static void SendEmail(String subject,String text) throws Exception {
+    public static void SendEmail(String subject,String text,String reciveAddress) throws Exception {
 
         // 创建邮件配置
         Properties props = new Properties();
@@ -51,7 +51,7 @@ public class MailUtil {
         // 开启debug模式，可以看到更多详细的输入日志
         session.setDebug(true);
         //创建邮件
-        MimeMessage message = createEmail(session,subject,text);
+        MimeMessage message = createEmail(session,subject,text,reciveAddress);
         //获取传输通道
         Transport transport = session.getTransport();
         transport.connect(SMTPSERVER,ACCOUT, PWD);
@@ -62,7 +62,7 @@ public class MailUtil {
     }
 
 
-    public static  MimeMessage createEmail(Session session,String subject,String text) throws Exception {
+    public static  MimeMessage createEmail(Session session,String subject,String text,String reciveAddress) throws Exception {
         // 根据会话创建邮件
         MimeMessage msg = new MimeMessage(session);
         // address邮件地址, personal邮件昵称, charset编码方式
@@ -71,7 +71,7 @@ public class MailUtil {
         // 设置发送邮件方
         msg.setFrom(fromAddress);
         InternetAddress receiveAddress = new InternetAddress(
-                "czckyd777@163.com", "test", "utf-8");
+                reciveAddress, "test", "utf-8");
         // 设置邮件接收方
         msg.setRecipient(RecipientType.TO, receiveAddress);
         // 设置邮件标题

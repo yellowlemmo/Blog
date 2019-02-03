@@ -118,9 +118,8 @@ public class IndexController extends BaseController {
             String newPassword = StringUtils.generatorChar(8);
             logger.info("发送随机密码到绑定邮箱");
             text.append(newPassword+" 请尽快登录进行修改");
-            MailUtil.SendEmail(subject,text.toString());
+            MailUtil.SendEmail(subject,text.toString(),user.getEmail());
             logger.info("新密码发送成功");
-            System.out.println(newPassword);
             String BCrNewPassword = Utils.BCryptUtil(newPassword);
             userService.updatePasswordById(BCrNewPassword,user.getId());
             result = "/login";
