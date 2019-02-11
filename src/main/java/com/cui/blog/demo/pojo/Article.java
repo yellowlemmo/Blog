@@ -43,6 +43,14 @@ public class Article {
     @NotNull
     private Timestamp createDate;
 
+
+    /**
+     * 点击量
+
+     */
+    @Column(name = "click_number")
+    private int clickNum;
+
     /**
      * 博客作者主键
      */
@@ -99,6 +107,14 @@ public class Article {
 
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
+    }
+
+    public int getClickNum() {
+        return clickNum;
+    }
+
+    public void setClickNum(int clickNum) {
+        this.clickNum = clickNum;
     }
 
     public User getUser() {

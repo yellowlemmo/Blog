@@ -11,3 +11,9 @@
 $(function() {
 	$.catalog("#catalog", ".post-content");
 });
+
+function statistic(blogId) {
+	alert(blogId);
+    window.location.href="blog/updateClickNumber?oid="+blogId;
+
+}

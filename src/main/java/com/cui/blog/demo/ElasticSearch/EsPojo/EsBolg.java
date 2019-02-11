@@ -22,13 +22,11 @@ public class EsBolg {
     /**
      * 标题
      */
-    @Field
     private String title;
 
     /**
      * 内容
      */
-    @Field
     private String context;
 
     public EsBolg(){

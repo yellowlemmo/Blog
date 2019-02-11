@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/header :: header}">
+
 </head>
 <body>
 <!-- Page Content -->
@@ -22,7 +23,7 @@
                                      alt="waylau">
 			                  </a>
 					        </span>-->
-                        <a href="/u/waylau/blogs/1" th:href="@{/blog/blogContext(blogId=${blog.article_id})}" class="card-link" th:text="${blog.title}" title="waylau">
+                        <a href="/u/waylau/blogs/1" th:href="@{/blog/blogContext(blogId=${blog.article_id})}" th:onclick="statistic([[${blog.article_id}]])"; class="card-link" th:text="${blog.title}" title="waylau">
                             OAuth 2.0 认证的原理与实践
                         </a></h2>
                     <!--<input type="hidden" id="context" name="context" th:value="${blog.context}"/>-->
@@ -151,5 +152,6 @@
 
 <div th:replace="~{fragments/footer :: footer}">...</div>
 <script type="text/javascript" th:src="@{/js/page.js}"></script>
+<script type="text/javascript" th:src="@{/js/blog.js}"></script>
 </body>
 </html>

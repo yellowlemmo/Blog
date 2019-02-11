@@ -48,4 +48,13 @@ public class ArticleService {
     public Page findAllBlog(Pageable pageable){
         return articleRepository.findAll(pageable);
     }
+
+    /**
+     * 更新博客点击量
+     * @param oid
+     * @throws Exception
+     */
+    public void updateClickNumber(String oid) throws Exception{
+        articleRepository.updateClickNumber(oid);
+    }
 }

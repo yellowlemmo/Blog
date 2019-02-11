@@ -9,6 +9,11 @@ public abstract class GlobalParamter {
     public static String ELASTICSEARCH_URL = "http://127.0.0.1:9200/blog/_search";
 
     /**
+     * 通用数字
+     */
+    public static Integer ZERO = 0;
+
+    /**
      * 请求响应代码
      */
     //成功

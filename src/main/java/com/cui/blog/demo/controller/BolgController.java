@@ -10,6 +10,7 @@ import com.cui.blog.demo.base.BaseController;
 import com.cui.blog.demo.pojo.Article;
 import com.cui.blog.demo.pojo.ArticleClassify;
 import com.cui.blog.demo.pojo.User;
+import com.cui.blog.demo.utils.GlobalParamter;
 import com.cui.blog.demo.utils.SpringSecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -74,6 +76,7 @@ public class BolgController extends BaseController {
         Timestamp createTime = new Timestamp(System.currentTimeMillis());
         article.setCreateDate(createTime);
         article.setArticleClassify(articleClassify);
+        article.setClickNum(GlobalParamter.ZERO);
         articleService.saveBlog(article);
         EsBolg  esBolg = new EsBolg(article.getArticle_id(),article.getTitle(),article.getContext());
         //索引博客
@@ -95,6 +98,14 @@ public class BolgController extends BaseController {
         Article blog = articleService.findById(blogId);
         model.addAttribute("blog",blog);
         return "/blog/blogView";
+    }
+
+    @RequestMapping(value = "/updateClickNumber")
+    @ResponseBody
+    public String updateClickNumber(String oid) throws Exception{
+        logger.info("点击量更新");
+        articleService.updateClickNumber(oid);
+        return null;
     }
 
 

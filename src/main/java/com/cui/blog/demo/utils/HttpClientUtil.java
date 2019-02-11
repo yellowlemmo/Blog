@@ -9,8 +9,16 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.List;
 
@@ -54,23 +62,11 @@ public class HttpClientUtil {
         return content;
     }
 
-    public static void main(String[] args) throws Exception{
-        String json = "{\n" +
-                "  \"query\": {\n" +
-                "    \"bool\": {\n" +
-                "      \"should\": [\n" +
-                "        { \"match\": { \"title\":  \"test\" }},\n" +
-                "        { \"match\": { \"context\": \"test\"   }}\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  }\n" +
-                "}";
-//        List<NameValuePair> listParam = new ArrayList<>();
-//        listParam.add(new BasicNameValuePair("q","title:index"));
-//        listParam.add(new BasicNameValuePair("q","context:可以仔细阅读这篇文章，"));
-        HttpClientUtil httpClientUtil = new HttpClientUtil();
-        String context = httpClientUtil.doPost("http://127.0.0.1:9200/blog/_search",  json);
-        System.out.println(context);
+    public static void main(String[] args) throws Exception {
+        Settings settings = Settings.builder().put("cluster.name", "elasticsearch").build();// 集群名
+//        QueryBuilder qb = QueryBuilders.matchAllQuery();
+        TransportClient transportClient = new PreBuiltTransportClient(settings)
+                .addTransportAddress(new TransportAddress(new InetSocketAddress(1)));
     }
 
 

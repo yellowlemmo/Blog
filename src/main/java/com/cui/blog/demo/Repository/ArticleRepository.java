@@ -6,6 +6,7 @@ import com.cui.blog.demo.pojo.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,5 +24,15 @@ public interface ArticleRepository extends BaseRepository<Article,String>{
      * @return
      */
     Page<Article> queryArticleByUser(User user,Pageable pageable);
+
+
+    /**
+     * 更新点击量
+     * @param oid
+     * @throws Exception
+     */
+    @Query(value = "update sys_article set click_number = click_number-1  where id=:id",nativeQuery = true)
+    @Modifying
+    void updateClickNumber(@Param(value = "id")  String oid) throws Exception;
 
 }
