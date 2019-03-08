@@ -1,13 +1,14 @@
 package com.cui.blog.demo.ElasticSearch.EsService;
 
 import com.cui.blog.demo.ElasticSearch.EsPojo.EsBolg;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * blog检索service接口
  */
-
+@Service
 public interface EsBlogService {
 
     /**
