@@ -5,13 +5,14 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  *博客实体类
  */
 @Entity(name = "sys_article")
-public class Article {
+public class Article implements Serializable {
 
     /**
      * 博客主键
@@ -60,7 +61,7 @@ public class Article {
     /**
      * 博客作者
      */
-    @ManyToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH},optional=false)
+    @ManyToOne
     @JoinColumn(name = "author")
     private User user;
 

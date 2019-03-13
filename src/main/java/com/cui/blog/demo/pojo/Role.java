@@ -3,6 +3,7 @@ package com.cui.blog.demo.pojo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,7 @@ import java.util.Set;
  * 用户角色实体类
  */
 @Entity(name = "sys_role")
-public class Role {
+public class Role implements Serializable {
 
     /**
      * 用户角色id

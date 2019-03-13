@@ -13,7 +13,6 @@ $(function() {
 });
 
 function statistic(blogId) {
-	alert(blogId);
     window.location.href="blog/updateClickNumber?oid="+blogId;
 
 }

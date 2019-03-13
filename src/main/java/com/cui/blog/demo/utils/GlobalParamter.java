@@ -2,6 +2,7 @@ package com.cui.blog.demo.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public abstract class GlobalParamter {
 
@@ -33,4 +34,10 @@ public abstract class GlobalParamter {
 
     //服务不可用，一般是系统超载
     public static Integer SERVICE_UNAVAILABLE = 503;
+
+    //redis超时时间
+    public static long REDIS_TIMROUT = 24;
+
+    //超时时间类型(时分秒)
+    public static TimeUnit REDIS_TIMETYPE = TimeUnit.HOURS;
 }

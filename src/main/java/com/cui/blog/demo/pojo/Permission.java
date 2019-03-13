@@ -4,13 +4,14 @@ package com.cui.blog.demo.pojo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 权限实体类
  */
 @Entity(name = "sys_permission")
-public class Permission {
+public class Permission implements Serializable {
 
     /**
      * 主键

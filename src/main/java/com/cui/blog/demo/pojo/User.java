@@ -1,5 +1,6 @@
 package com.cui.blog.demo.pojo;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -15,7 +17,7 @@ import java.util.*;
  * 用户实体类
  */
 @Entity(name = "sys_user")
-public class User implements UserDetails{
+public class User implements UserDetails,Serializable {
 
     @Id
     @Column(name = "id")
@@ -38,14 +40,11 @@ public class User implements UserDetails{
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    //不输出Role避免序列化死循环
+    @JsonBackReference
     @NotNull(message = "角色不能为空！")
     private Role role;
 
-    /**
-     * 用户的文章
-     */
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch=FetchType.LAZY)
-    private Set<Article> articles = new HashSet<>();
 
     public String getId() {
         return id;
@@ -85,14 +84,6 @@ public class User implements UserDetails{
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public Set<Article> getArticles() {
-        return articles;
-    }
-
-    public void setArticles(Set<Article> articles) {
-        this.articles = articles;
     }
 
     public User() {

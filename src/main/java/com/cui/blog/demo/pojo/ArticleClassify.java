@@ -6,13 +6,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 /**
  * 文章类型实体类
  */
 
 @Entity(name = "sys_article_classify")
-public class ArticleClassify {
+public class ArticleClassify implements Serializable {
 
     /**
      * 文章分类主键

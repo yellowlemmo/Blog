@@ -15,6 +15,8 @@ import com.cui.blog.demo.utils.SpringSecurityUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +51,10 @@ public class BolgController extends BaseController {
      */
     @Autowired
     private ArticleClassifyService articleClassifyService;
+
+    @Autowired
+    @Qualifier("redisTemplate")
+    private RedisTemplate<String,Object> redisTemplate;
 
     @RequestMapping(value = "/add")
     public String addNewBlog(Model model) throws Exception{
