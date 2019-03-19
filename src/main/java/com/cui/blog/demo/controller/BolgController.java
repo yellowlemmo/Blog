@@ -12,6 +12,7 @@ import com.cui.blog.demo.pojo.ArticleClassify;
 import com.cui.blog.demo.pojo.User;
 import com.cui.blog.demo.utils.GlobalParamter;
 import com.cui.blog.demo.utils.SpringSecurityUtil;
+import com.cui.blog.demo.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,13 +107,38 @@ public class BolgController extends BaseController {
         return "/blog/blogView";
     }
 
-    @RequestMapping(value = "/updateClickNumber")
+    /**
+     * 博客点击量更新
+     * @param oid
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value = "/updateClickNumber",produces = "application/json")
     @ResponseBody
     public String updateClickNumber(String oid) throws Exception{
         logger.info("点击量更新");
-        articleService.updateClickNumber(oid);
-        return null;
+        String message = null;
+        try {
+            articleService.updateClickNumber(oid);
+            message = "success";
+            logger.info("点击量更新成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            message = e.toString();
+            logger.info("点击量更新失败");
+        }
+        return message;
     }
+
+    //测试查找缓存
+
+//    @RequestMapping(value = "/find")
+//    @ResponseBody
+//    public String getBlog(String oid) throws Exception{
+//        logger.info("blog查询");
+//        articleService.findById(oid);
+//        return articleService.findById(oid).getContext();
+//    }
 
 
 }

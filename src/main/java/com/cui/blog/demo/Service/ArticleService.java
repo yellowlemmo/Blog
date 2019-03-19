@@ -5,11 +5,13 @@ import com.cui.blog.demo.pojo.Article;
 import com.cui.blog.demo.pojo.User;
 import com.cui.blog.demo.utils.GlobalParamter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -40,6 +42,7 @@ public class ArticleService {
         return page;
     }
 
+    @Cacheable(value="Blogs",key = "#blogId")
     public Article findById(String blogId) throws Exception{
         return articleRepository.findById(blogId).get();
     }
@@ -70,6 +73,24 @@ public class ArticleService {
      * @throws Exception
      */
     public void updateClickNumber(String oid) throws Exception{
-        articleRepository.updateClickNumber(oid);
+         articleRepository.updateClickNumber(oid);
+    }
+
+    /**
+     * 查找热门博客top5
+     * @return
+     * @throws Exception
+     */
+    public List<Article> findTopFiveBolg() throws Exception{
+        return articleRepository.findTopFiveArticle();
+    }
+
+    /**
+     * 查询最新的前5篇博客
+     * @return
+     * @throws Exception
+     */
+    public List<Article> findNewFiveBlog() throws Exception{
+        return articleRepository.findNewFiveArticle();
     }
 }

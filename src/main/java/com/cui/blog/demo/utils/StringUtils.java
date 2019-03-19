@@ -1,5 +1,7 @@
 package com.cui.blog.demo.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 public class StringUtils {
@@ -33,5 +35,16 @@ public class StringUtils {
             stringBuffer.append(ALLCHAR.charAt(random.nextInt(ALLCHAR.length())));
         }
         return stringBuffer.toString();
+    }
+
+    /**
+     * 返回当前时间
+     * @return
+     */
+    public static String getCurrentTime(){
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmdd");
+        String currentDateStr = simpleDateFormat.format(date);
+        return currentDateStr;
     }
 }

@@ -55,10 +55,16 @@ public class IndexController extends BaseController {
     @RequestMapping("/index")
     public String index(Model model,
                         @RequestParam(value = "pageIndex",defaultValue = "0") int pageIndex,
-                        @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
+                        @RequestParam(value = "pageSize",defaultValue = "10") int pageSize) throws Exception{
         PageableFactory pageableFactory = new PageableFactory(pageIndex,pageSize);
         Page<Article> page = articleService.findAllBlog(pageableFactory.getPageable());
+        //点击量top5的博客
+        List<Article> hostBlog = articleService.findTopFiveBolg();
+        //最新发布的前5篇
+        List<Article> newBlog = articleService.findNewFiveBlog();
         model.addAttribute("page",page);
+        model.addAttribute("hostBlog",hostBlog);
+        model.addAttribute("newBlog",newBlog);
         return "index";
     }
 

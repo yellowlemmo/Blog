@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ArticleRepository extends BaseRepository<Article,String>{
 
@@ -31,8 +33,27 @@ public interface ArticleRepository extends BaseRepository<Article,String>{
      * @param oid
      * @throws Exception
      */
-    @Query(value = "update sys_article set click_number = click_number-1  where id=:id",nativeQuery = true)
+    @Query(value = "update sys_article set click_number = click_number+1  where id=:id",nativeQuery = true)
     @Modifying
     void updateClickNumber(@Param(value = "id")  String oid) throws Exception;
+
+
+    /**
+     * 查询热门文章top5
+     * @return
+     * @throws Exception
+     */
+    @Query(value = "select * from sys_article ORDER BY click_number desc LIMIT 5",nativeQuery = true)
+    @Modifying
+    List<Article> findTopFiveArticle() throws Exception;
+
+    /**
+     * 查询最新发布的5篇文章
+     * @return
+     * @throws Exception
+     */
+    @Query(value = "select * from sys_article ORDER BY create_date desc LIMIT 5",nativeQuery = true)
+    @Modifying
+    List<Article> findNewFiveArticle() throws Exception;
 
 }

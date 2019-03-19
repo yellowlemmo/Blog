@@ -3,8 +3,10 @@ package com.cui.blog.demo.Service;
 
 import com.cui.blog.demo.Repository.UserRepository;
 import com.cui.blog.demo.pojo.User;
+import com.cui.blog.demo.utils.GlobalParamter;
 import com.cui.blog.demo.utils.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,13 +14,24 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
 
+    /**
+     * 用户repository接口
+     */
     @Autowired
     private UserRepository userRepository;
+
+    /**
+     * redisTemplate接口
+     */
+    @Autowired
+    private RedisTemplateService redisTemplateService;
 
     /**
      *创建新用户
@@ -26,6 +39,10 @@ public class UserService implements UserDetailsService {
      */
     public void createUser(User user) throws Exception{
         userRepository.saveAndFlush(user);
+        //保存用户缓存时key值是由当前用户id拼接
+        redisTemplateService.saveRedisCache(user.getId(),user,
+                GlobalParamter.REDIS_TIMROUT,GlobalParamter.REDIS_TIMETYPE);
+
     }
 
     /**
@@ -34,6 +51,7 @@ public class UserService implements UserDetailsService {
      * @return
      * @throws Exception
      */
+    @Cacheable(value = "Users",key = "#userName")
     public User findUserByUserName(String userName) throws Exception {
         User user = userRepository.findByusername(userName);
         return user;
@@ -66,6 +84,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsernameAndEmail(username,eamil);
     }
 
+    @Cacheable(value = "Users",key = "#id")
     public User findUserById(String id) throws Exception{
         return userRepository.findById(id).get();
     }

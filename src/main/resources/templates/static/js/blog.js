@@ -8,11 +8,17 @@
 //# sourceURL=blog.js
 
 // DOM 加载完再执行
-$(function() {
-	$.catalog("#catalog", ".post-content");
-});
+// $(function() {
+// 	$.catalog("#catalog", ".post-content");
+// });
 
-function statistic(blogId) {
-    window.location.href="blog/updateClickNumber?oid="+blogId;
 
+/**
+ *
+ * 新增博客内容
+ */
+
+function addBlog(){
+    var content = $('#html').html();
+    $('#context').text(content);
 }
