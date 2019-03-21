@@ -30,15 +30,20 @@
         }
         .form-button{
             overflow: auto;
-            margin-top: 10%;
-            margin-left: 30%;
+            margin-top: -3%;
+            margin-left: 1%;
         }
+        .form-other{
+            overflow: auto;
+            margin: 10px 120px;
+        }
+
         #form{
             position: absolute;
             top: 28%;
-            left: 38%;
+            left: 30%;
             border:3px solid #eceeef;
-            height:42%;
+            height:48%;
             width: 36%;
         }
         #login{
@@ -61,14 +66,25 @@
     <div th:if="${errorMessage}"><p th:text="${errorMessage}"></p></div>
     </div>
     <div class="form-group">
+        <label for="validate">验证码</label>
+        <input type="text" name="validate" id="validate" class="form-text">
+    </div>
+    <div class="form-group">
         <label>记住我</label>
         <input type="checkbox" name="remember-me" value="true"/>
-        &nbsp&nbsp&nbsp&nbsp<a th:href="@{/forgetPassword}">忘记密码？</a>
     </div>
     <div class="form-button">
+        <input type="submit" class="btn btn-success" name="login" value="登录">
+        <div style="float: right">
         <a th:href="@{/register}">新用户注册</a>
-        &nbsp&nbsp&nbsp&nbsp
-    <input type="submit" class="btn btn-success" name="login" value="登录">
+        |
+        <a th:href="@{/forgetPassword}">忘记密码？</a>
+        </div>
+    </div>
+    <div class="form-other">
+        <div class="switch switch-mini">
+            <input type="checkbox" checked />
+        </div>
     </div>
 </form>
 </div>
