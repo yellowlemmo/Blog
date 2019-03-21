@@ -1,5 +1,6 @@
 package com.cui.blog.demo.Service;
 
+import com.cui.blog.demo.pojo.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -54,8 +55,17 @@ public class RedisTemplateService {
      * @param key
      * @param list
      */
-    public void saveRedisListCache(String key,List<Object> list){
+    public <T> void  saveRedisListCache(String key, List<T> list){
         redisTemplate.opsForList().leftPush(key,list);
+    }
+
+    /**
+     * 得到list
+     * @param key
+     * @return
+     */
+    public Object getRedisList(String key){
+        return redisTemplate.opsForList().leftPop(key);
     }
 
     /**

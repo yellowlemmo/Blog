@@ -27,7 +27,6 @@ public interface ArticleRepository extends BaseRepository<Article,String>{
      */
     Page<Article> queryArticleByUser(User user,Pageable pageable);
 
-
     /**
      * 更新点击量
      * @param oid

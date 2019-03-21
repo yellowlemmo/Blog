@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,10 +55,18 @@ public class IndexController extends BaseController {
 
     @RequestMapping("/index")
     public String index(Model model,
+                        @RequestParam(value = "sort",defaultValue = "default") String sortType,
                         @RequestParam(value = "pageIndex",defaultValue = "0") int pageIndex,
                         @RequestParam(value = "pageSize",defaultValue = "10") int pageSize) throws Exception{
-        PageableFactory pageableFactory = new PageableFactory(pageIndex,pageSize);
-        Page<Article> page = articleService.findAllBlog(pageableFactory.getPageable());
+        Sort sort = new Sort(Sort.Direction.DESC,sortType);
+        Page<Article> page = null;
+        //sortType不为空默认分页
+        if (sortType.equals("default")){
+            page = articleService.findAllBlog(pageIndex,pageSize);
+        }else {
+            //根据sortType排序分页
+            page = articleService.findAllBlogSortByKey(pageIndex,pageSize,sortType);
+        }
         //点击量top5的博客
         List<Article> hostBlog = articleService.findTopFiveBolg();
         //最新发布的前5篇

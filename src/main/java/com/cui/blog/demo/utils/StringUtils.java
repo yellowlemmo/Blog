@@ -1,7 +1,13 @@
 package com.cui.blog.demo.utils;
 
+import org.elasticsearch.common.util.ObjectArray;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 public class StringUtils {
@@ -46,5 +52,34 @@ public class StringUtils {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyymmdd");
         String currentDateStr = simpleDateFormat.format(date);
         return currentDateStr;
+    }
+
+    /**
+     * 序列化list为字节数组
+     * @param list
+     * @param <T>
+     * @return
+     */
+    public static <T> byte[] serialize(List<T> list){
+        if(list == null){
+            throw new NullPointerException("list is null");
+        }
+        byte[] result = null;
+        ByteArrayOutputStream bos = null;
+        ObjectOutputStream ops = null;
+        try{
+            bos = new ByteArrayOutputStream();
+            ops = new ObjectOutputStream(bos);
+            for (T obj:list) {
+                ops.writeObject(obj);
+            }
+            ops.writeObject(null);
+            ops.close();
+            bos.close();
+            result = bos.toByteArray();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 }

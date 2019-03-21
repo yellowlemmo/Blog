@@ -2,7 +2,10 @@ package com.cui.blog.demo.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,10 +32,46 @@ public class JsonUtil {
      * @param list
      * @return
      */
-    public static String listToJson(List<Object> list){
+    public static <T> String listToJson(List<T> list){
         Gson gson  = new Gson();
         String jsonArray = gson.toJson(list);
         return jsonArray;
+    }
+
+    /**
+     * jsonArray转换为list
+     * @param jsonArray
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> jsonToList(String jsonArray,Class clazz){
+        Type type = new ParameterizedTypeImpl(clazz);
+        List<T> list =  new Gson().fromJson(jsonArray, type);
+        return list;
+    }
+
+    private static class ParameterizedTypeImpl implements ParameterizedType{
+        Class clazz;
+
+        public ParameterizedTypeImpl(Class clz){
+            clazz = clz;
+        }
+
+        @Override
+        public Type[] getActualTypeArguments() {
+            return new Type[]{clazz};
+        }
+
+        @Override
+        public Type getRawType() {
+            return List.class;
+        }
+
+        @Override
+        public Type getOwnerType() {
+            return null;
+        }
     }
 
     /**

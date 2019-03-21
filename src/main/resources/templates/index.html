@@ -95,11 +95,16 @@
                     <h5 class="card-header"><i class="fa fa-fire" aria-hidden="true"></i> 热门文章</h5>
 
                     <ul class="list-group">
-                        <div th:each="blog: ${hostBlog}">
+                        <div th:each="blog,status: ${hostBlog}">
 
                              <a th:href="@{/blog/blogContext(blogId=${blog.article_id})}" class="list-group-item">
                                  [[${blog.title}]]
-                                 <span class="badge badge-warning badge-pill" th:text="${blog.clickNum}"></span>
+                                 <span th:if="${status.index eq 0}" class="badge badge-danger badge-pill" th:text="${blog.clickNum}"></span>
+                                 <span th:if="${status.index eq 1}" class="badge badge-warning badge-pill" th:text="${blog.clickNum}"></span>
+                                 <span th:if="${status.index eq 2}" class="badge badge-primary badge-pill" th:text="${blog.clickNum}"></span>
+                                 <span th:if="${status.index eq 3}" class="badge badge-success badge-pill" th:text="${blog.clickNum}"></span>
+                                 <span th:if="${status.index eq 4}" class="badge badge-info badge-pill" th:text="${blog.clickNum}"></span>
+
                              </a>
                          </div>
                     </ul>
