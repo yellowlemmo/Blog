@@ -62,28 +62,24 @@
     </div>
     <div class="form-group">
         <label for="password">密码</label>
-        <input type="password" name="password" class="form-text" id="password"/>
+        <input type="password" autocomplete="true" name="password" class="form-text" id="password"/>
     <div th:if="${errorMessage}"><p th:text="${errorMessage}"></p></div>
     </div>
     <div class="form-group">
-        <label for="validate">验证码</label>
-        <input type="text" name="validate" id="validate" class="form-text">
+        <label for="code">验证码</label>
+        <input type="text" name="code" id="code" class="form-text">&nbsp;
+        <img th:src="@{/code}" onclick="this.src='/code?d='+Math.random()" id="refresh">
     </div>
     <div class="form-group">
         <label>记住我</label>
         <input type="checkbox" name="remember-me" value="true"/>
     </div>
     <div class="form-button">
-        <input type="submit" class="btn btn-success" name="login" value="登录">
+        <input type="submit" class="btn btn-success" th:value="登录" name="login"/>
         <div style="float: right">
         <a th:href="@{/register}">新用户注册</a>
         |
         <a th:href="@{/forgetPassword}">忘记密码？</a>
-        </div>
-    </div>
-    <div class="form-other">
-        <div class="switch switch-mini">
-            <input type="checkbox" checked />
         </div>
     </div>
 </form>

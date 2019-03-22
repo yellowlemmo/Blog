@@ -61,7 +61,7 @@ public class Utils {
         return value;
     }
 
-    public static void main(String[] arg) throws Exception{
-        System.out.println(getProperties("classpath:mail.properties","add"));
-    }
+//    public static void main(String[] arg) throws Exception{
+//        System.out.println(getProperties("classpath:mail.properties","add"));
+//    }
 }

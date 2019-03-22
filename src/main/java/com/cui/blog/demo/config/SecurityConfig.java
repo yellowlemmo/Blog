@@ -1,5 +1,6 @@
 package com.cui.blog.demo.config;
 
+import com.cui.blog.demo.Filter.VerifyCodeFilter;
 import com.cui.blog.demo.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -28,6 +30,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private MyAuthenticationProvider provider;
+
+    /**
+     * 验证码过滤器
+     */
+    @Autowired
+    private VerifyCodeFilter verifyCodeFilter;
 
     /**
      * 数据源
@@ -57,8 +65,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //新增验证码过滤器
+        http.addFilterBefore(verifyCodeFilter,UsernamePasswordAuthenticationFilter.class);
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/index","/register","/forgetPassword",
+        http.authorizeRequests().antMatchers("/index","/register","/code","/forgetPassword",
                 "/randomGeneratorPassword","/elasticsearch/blog",
                 "/saveuser","/css/**","/js/**","/data/**","/fonts/**","/images/**")
                 .permitAll().anyRequest().authenticated()
