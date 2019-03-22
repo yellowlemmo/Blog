@@ -63,8 +63,6 @@ public class ArticleService {
         articleRepository.saveAndFlush(article);
         redisTemplateService.saveRedisCache(article.getArticle_id(),article,
                 GlobalParamter.REDIS_TIMROUT,GlobalParamter.REDIS_TIMETYPE);
-        //保存新博客后最新列表发生变化删除redis中的最新列表
-        redisTemplateService.delete("resentBlog::1");
     }
 
     /**
@@ -98,8 +96,6 @@ public class ArticleService {
      */
     public void updateClickNumber(String oid) throws Exception{
         articleRepository.updateClickNumber(oid);
-        //点击后热门博客列表缓存与数据库不同步
-        redisTemplateService.delete("hostBlog::1");
     }
 
     /**

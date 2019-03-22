@@ -8,10 +8,7 @@ import com.cui.blog.demo.base.PageableFactory;
 import com.cui.blog.demo.pojo.Article;
 import com.cui.blog.demo.pojo.Role;
 import com.cui.blog.demo.pojo.User;
-import com.cui.blog.demo.utils.MailUtil;
-import com.cui.blog.demo.utils.SpringSecurityUtil;
-import com.cui.blog.demo.utils.StringUtils;
-import com.cui.blog.demo.utils.Utils;
+import com.cui.blog.demo.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +22,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.Random;
 
@@ -101,6 +101,23 @@ public class IndexController extends BaseController {
         logger.error("登录失败");
         model.addAttribute("errorMessage","用户名密码不正确！");
         return "login";
+    }
+
+
+    /**
+     * 生成验证码
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/code")
+    public void code(HttpServletRequest request, HttpServletResponse response) throws Exception{
+        VerifyCodeUtil vc = new VerifyCodeUtil();
+        BufferedImage image = vc.getImage();
+        String text = vc.getText();
+        HttpSession session = request.getSession();
+        session.setAttribute("index_code",text);
+        VerifyCodeUtil.output(image,response.getOutputStream());
     }
 
     /**

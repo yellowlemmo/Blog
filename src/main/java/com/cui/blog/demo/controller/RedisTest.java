@@ -29,13 +29,4 @@ public class RedisTest extends BaseController {
         return stringRedisTemplate.opsForValue().get("czc");
     }
 
-    @RequestMapping(value = "/code")
-    public void code(HttpServletRequest request,HttpServletResponse response) throws Exception{
-        VerifyCodeUtil vc = new VerifyCodeUtil();
-        BufferedImage image = vc.getImage();
-        String text = vc.getText();
-        HttpSession session = request.getSession();
-        session.setAttribute("index_code",text);
-        VerifyCodeUtil.output(image,response.getOutputStream());
-    }
 }
