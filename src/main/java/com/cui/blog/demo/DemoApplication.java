@@ -3,6 +3,8 @@ package com.cui.blog.demo;
 import com.cui.blog.demo.base.BaseRepositoryFactoryBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -13,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableCaching
 @EnableScheduling
-public class DemoApplication {
+public class DemoApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         /**
@@ -23,5 +25,10 @@ public class DemoApplication {
          */
         System.setProperty("es.set.netty.runtime.available.processors", "false");
         SpringApplication.run(DemoApplication.class, args);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(this.getClass());
     }
 }

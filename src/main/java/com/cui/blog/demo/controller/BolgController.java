@@ -104,7 +104,7 @@ public class BolgController extends BaseController {
         logger.info("查看博客内容");
         Article blog = articleService.findById(blogId);
         model.addAttribute("blog",blog);
-        return "/blog/blogView";
+        return "blog/blogView";
     }
 
     /**
