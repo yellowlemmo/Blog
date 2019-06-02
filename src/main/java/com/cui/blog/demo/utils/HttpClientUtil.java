@@ -9,16 +9,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
-
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.URI;
 import java.util.List;
 
@@ -60,13 +51,6 @@ public class HttpClientUtil {
             httpClient.close();
         }
         return content;
-    }
-
-    public static void main(String[] args) throws Exception {
-        Settings settings = Settings.builder().put("cluster.name", "elasticsearch").build();// 集群名
-//        QueryBuilder qb = QueryBuilders.matchAllQuery();
-        TransportClient transportClient = new PreBuiltTransportClient(settings)
-                .addTransportAddress(new TransportAddress(new InetSocketAddress(1)));
     }
 
 
