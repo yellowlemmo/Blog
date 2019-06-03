@@ -45,6 +45,19 @@ public class User implements UserDetails,Serializable {
     @NotNull(message = "角色不能为空！")
     private Role role;
 
+    /**
+     * base64加密后的头像字符串
+     */
+    @Column(name="base64_ico")
+    private String base;
+
+    public String getBase() {
+        return base;
+    }
+
+    public void setBase(String base) {
+        this.base = base;
+    }
 
     public String getId() {
         return id;

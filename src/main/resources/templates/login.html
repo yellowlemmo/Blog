@@ -68,7 +68,7 @@
     <div class="form-group">
         <label for="code">验证码</label>
         <input type="text" name="code" id="code" class="form-text">&nbsp;
-        <img th:src="@{/code}" onclick="this.src='/code?d='+Math.random()" id="refresh">
+        <img th:src="@{/code}" onclick="this.src='/code'" id="refresh">
     </div>
     <div class="form-group">
         <label>记住我</label>

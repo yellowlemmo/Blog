@@ -74,6 +74,7 @@ public class IndexController extends BaseController {
         model.addAttribute("page",page);
         model.addAttribute("hostBlog",hostBlog);
         model.addAttribute("newBlog",newBlog);
+        model.addAttribute("user",SpringSecurityUtil.currentUser(session));
         return "index";
     }
 
@@ -111,7 +112,7 @@ public class IndexController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/code")
-    public void code(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public void code(HttpServletRequest request,HttpServletResponse response) throws Exception{
         VerifyCodeUtil vc = new VerifyCodeUtil();
         BufferedImage image = vc.getImage();
         String text = vc.getText();

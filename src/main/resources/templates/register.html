@@ -5,11 +5,14 @@
     <meta charset="UTF-8">
     <title>注册</title>
     <link type="text/css" th:href="@{/css/bootstrap.css}" href="../css/bootstrap.css"  rel="stylesheet">
-    <script type="text/javascript" src="https://cdn.bootcss.com/marked/0.5.2/marked.js"></script>
-    <script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}" src="../js/jquery-3.1.1.min.js"></script>
-    <script type="application/javascript" src="../../js/tether.min.js" th:src="@{/js/tether.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/bootstrap.js}" src="../js/bootstrap.js"></script>
+    <link type="text/css" th:href="@{/css/amazeui/amazeui.min.css}"  rel="stylesheet">
+    <link type="text/css" th:href="@{/css/amazeui/amazeui.cropper.css}"  rel="stylesheet">
+    <link type="text/css" th:href="@{/css/amazeui/custom_up_img.css}"  rel="stylesheet">
+    <link type="text/css" th:href="@{/css/amazeui/font-awesome.4.6.0.css}"  rel="stylesheet">
+
     <style type="text/css">
+        .up-img-cover {width: 100px;height: 100px;}
+        .up-img-cover img{width: 100%;}
         .form-group{
             overflow: auto;
             width: 100%;
@@ -39,7 +42,6 @@
             top: 28%;
             left: 38%;
             border:3px solid #eceeef;
-            height:323px;
             width: 456px;
         }
         #reg{
@@ -48,26 +50,107 @@
         }
 
     </style>
+    <script type="text/javascript">
+        var basePath = [[${#httpServletRequest.getScheme() + "://" + #httpServletRequest.getServerName() + ":" + #httpServletRequest.getServerPort() + #httpServletRequest.getContextPath()}]];
+
+
+    </script>
 </head>
 <body>
 <div id="form">
-<form id="reg" th:action="@{/saveuser}" th:method="post">
-    <div class="form-group">
-        <label for="username">用户名</label>
-    <input type="text" name="username" class="form-text" id="username"/>
-    </div>
-    <div class="form-group">
-        <label for="password">密码</label>
-    <input type="password" name="password" class="form-text" id="password"/>
-    </div>
-    <div class="form-group">
-        <label for="email">邮箱</label>
-    <input type="email" name="email" class="form-text" id="email" />
-    </div>
-    <div class="form-button">
-    <input type="submit" name="register" id="register" class="btn btn-success btn-lg" value="注册"/>
-    </div>
-</form>
+    <form id="reg" th:action="@{/saveuser}" th:method="post">
+        <div class="form-group">
+            <label for="username">用户名</label>
+            <input type="text" name="username" class="form-text" id="username"/>
+        </div>
+        <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" name="password" class="form-text" id="password"/>
+        </div>
+        <div class="form-group">
+            <label for="email">邮箱</label>
+            <input type="email" name="email" class="form-text" id="email" />
+        </div>
+        <center>
+            <div class="up-img-cover"  id="up-img-touch" >
+                <img class="am-circle" alt="点击图片上传" th:src="@{/images/hu.jpg}" data-am-popover="{content: '点击上传', trigger: 'hover focus'}" >
+            </div>
+        </center>
+        <div><a style="text-align: center; display: block;"  id="pic"></a></div>
+
+        <input type="hidden" name="base" class="form-text" id="base" />
+
+        <div class="form-button">
+            <input type="submit" name="register" id="register" class="btn btn-success btn-lg" value="注册"/>
+        </div>
+    </form>
 </div>
+
+<!--图片上传框-->
+<div class="am-modal am-modal-no-btn up-frame-bj " tabindex="-1" id="doc-modal-1">
+    <div class="am-modal-dialog up-frame-parent up-frame-radius">
+        <div class="am-modal-hd up-frame-header">
+            <label>修改头像</label>
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd  up-frame-body">
+            <div class="am-g am-fl">
+                <div class="am-form-group am-form-file">
+                    <div class="am-fl">
+                        <button type="button" class="am-btn am-btn-default am-btn-sm">
+                            <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
+                    </div>
+                    <input type="file" name="file" id="inputImage">
+                </div>
+            </div>
+            <div class="am-g am-fl" >
+                <div class="up-pre-before up-frame-radius">
+                    <img alt="" src="" id="image" >
+                </div>
+                <div class="up-pre-after up-frame-radius">
+                </div>
+            </div>
+            <div class="am-g am-fl">
+                <div class="up-control-btns">
+                    <span class="am-icon-rotate-left"  onclick="rotateimgleft()"></span>
+                    <span class="am-icon-rotate-right" onclick="rotateimgright()"></span>
+                    <span class="am-icon-check" id="up-btn-ok" url="/upload"></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!--加载框-->
+<div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">正在上传...</div>
+        <div class="am-modal-bd">
+            <span class="am-icon-spinner am-icon-spin"></span>
+        </div>
+    </div>
+</div>
+
+<!--警告框-->
+<div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">信息</div>
+        <div class="am-modal-bd"  id="alert_content">
+            成功了
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/marked/0.5.2/marked.js"></script>
+<script type="text/javascript" th:src="@{/js/jquery-3.1.1.min.js}" src="../js/jquery-3.1.1.min.js"></script>
+<script type="application/javascript"  th:src="@{/js/amazeui/amazeui.min.js}"></script>
+<script type="application/javascript"  th:src="@{/js/amazeui/cropper.min.js}"></script>
+<script type="application/javascript"  th:src="@{/js/amazeui/custom_up_img.js}"></script>
+
+<!--<script type="application/javascript" src="../../js/tether.min.js" th:src="@{/js/tether.min.js}"></script>-->
+<!--<script type="text/javascript" th:src="@{/js/bootstrap.js}" src="../js/bootstrap.js"></script>-->
 </body>
 </html>
