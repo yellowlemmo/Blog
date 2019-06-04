@@ -14,6 +14,8 @@ import java.sql.Timestamp;
 @Entity(name = "sys_article")
 public class Article implements Serializable {
 
+    static final long serialVersionUID = 42L;
+
     /**
      * 博客主键
      */

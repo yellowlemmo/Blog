@@ -19,6 +19,8 @@ import java.util.*;
 @Entity(name = "sys_user")
 public class User implements UserDetails,Serializable {
 
+    static final long serialVersionUID = 42L;
+
     @Id
     @Column(name = "id")
     @GenericGenerator(name = "idGenerator",strategy = "uuid")

@@ -15,6 +15,8 @@ import java.io.Serializable;
 @Entity(name = "sys_article_classify")
 public class ArticleClassify implements Serializable {
 
+    static final long serialVersionUID = 42L;
+
     /**
      * 文章分类主键
      */

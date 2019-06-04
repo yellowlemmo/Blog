@@ -14,6 +14,8 @@ import java.util.Set;
 @Entity(name = "sys_role")
 public class Role implements Serializable {
 
+    static final long serialVersionUID = 42L;
+
     /**
      * 用户角色id
      */

@@ -13,6 +13,8 @@ import java.util.List;
 @Entity(name = "sys_permission")
 public class Permission implements Serializable {
 
+    static final long serialVersionUID = 42L;
+
     /**
      * 主键
      */
