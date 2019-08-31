@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -80,11 +82,16 @@ public class IndexController extends BaseController {
 
     @RequestMapping(value = "/login",method = RequestMethod.GET)
     public String loginPage(Model model, String error, String logout){
+        try{
         if (error != null) {
             model.addAttribute("error", "Your username and password is invalid.");
         }
         if (logout != null)
             model.addAttribute("message", "You have been logged out successfully.");
+        }catch (AuthenticationServiceException authenticationServiceException){
+            System.out.println(authenticationServiceException.toString());
+            authenticationServiceException.printStackTrace();
+        }
 
         return "login";
     }
@@ -98,9 +105,17 @@ public class IndexController extends BaseController {
     }
 
     @RequestMapping(value = "/login/error")
-    public String loginError(Model model){
+    public String loginError(Model model,HttpServletRequest request){
+        try{
         logger.error("登录失败");
+//        AuthenticationException exception = (AuthenticationException) request.getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
+//        System.out.println(exception);
         model.addAttribute("errorMessage","用户名密码不正确！");
+        }catch (AuthenticationServiceException authenticationServiceException){
+            System.out.println(authenticationServiceException.toString());
+            authenticationServiceException.printStackTrace();
+        }
+
         return "login";
     }
 
